@@ -9,15 +9,16 @@ h1 {
 .info-title {
   position: fixed;
   width: 100%;
-  background: white;
+  background: black;
   padding: 10px 50px;
+  color: white;
   top: 0;
   box-shadow: 1px 1px 5px black;
 }
 
 .board {
   display: grid;
-  margin-top: 200px;
+  margin-top: 250px;
 }
 
 .square, .mine {

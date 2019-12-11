@@ -1,5 +1,24 @@
+let best = localStorage.getItem("best");
+
 const game = (function() {
   const main = document.getElementById('main');
+
+  function gameOver() {
+    let board = document.getElementById('board');
+    board.style.pointerEvents = "none";
+    const squares = board.querySelectorAll(".square");
+    const mines = board.querySelectorAll(".mine");
+    squares.forEach(ele => {
+      ele.style.background = 'green';
+    });
+    mines.forEach(ele => {
+      ele.style.background = '#b02525';
+    });
+    const score = parseInt(document.getElementById('points').innerHTML);
+    if(score > best) {
+      localStorage.setItem("best", score);
+    }
+  }
 
   function getXY(obj) {
     const id = obj.id.slice(6, obj.id.size);
@@ -23,8 +42,9 @@ const game = (function() {
   function showGreens(mx, my) {
     const check = [];
     const checked = [];
-    check.push(document.getElementById(`square${mx}-${my}`))
-    let count = parseInt(document.getElementById('points').innerHTML) + 1;
+    check.push(document.getElementById(`square${mx}-${my}`));
+    let count = parseInt(document.getElementById('points').innerHTML);
+    const aux = count;
     while(check.length > 0) {
       let current = check[0];
       let xy = getXY(current);
@@ -41,17 +61,23 @@ const game = (function() {
           x = xy[0];
           y = xy[1];
           element.style.background = 'green';
+          if(element.style.pointerEvents !== 'none') {
+            count += 1;
+          }
+          element.style.pointerEvents = 'none';
           let mines = countMines(x, y);
           element.style.padding = "4.5px";
           element.innerHTML = mines;
           if(!checked.includes(element)) {
             check.push(element);
-            count += 1;
           }
         }
       });
       check.splice(0, 1);
       checked.push(current);
+    }
+    if(aux === count){
+      count += 1;
     }
     document.getElementById('points').innerHTML = count;
   }
@@ -79,8 +105,9 @@ const game = (function() {
     let obj = event.target;
     obj.style.padding = "4.5px";
     if(obj.className === "mine") {
-      obj.style.background = "red";
+      obj.style.background = "b02525";
       obj.innerHTML = 'x';
+      gameOver();
     } else {
       obj.style.background = "green";
       const idArr = getXY(obj);
@@ -94,6 +121,7 @@ const game = (function() {
     const board = document.createElement('DIV');
     let count = 0;
     board.classList.add('board');
+    board.id = 'board';
     board.style.gridTemplateColumns = `repeat(${x}, 1fr)`;
     for(let i = 0; i < x; i += 1) {
       for(let j = 0; j < y; j += 1) {
@@ -112,6 +140,13 @@ const game = (function() {
       }
     }
     document.getElementById('need-points').innerHTML = 50 * 50 - count;
+    if(best === null) {
+      localStorage.setItem("best", 0);
+      document.getElementById('best').innerHTML = best;
+    } else {
+      document.getElementById('best').innerHTML = best;
+    }
+
     main.appendChild(board);
   };
 
