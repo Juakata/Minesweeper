@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+}
+
+h1 {
+  text-align: center;
+}
+
+.info-title {
+  position: fixed;
+  width: 100%;
+  background: white;
+  padding: 10px 50px;
+  top: 0;
+  box-shadow: 1px 1px 5px black;
+}
+
+.board {
+  display: grid;
+  margin-top: 200px;
+}
+
+.square, .mine {
+  border: 1px solid black;
+  padding: 12px;
+  font-size: 12px;
+  text-align: center;
+}
