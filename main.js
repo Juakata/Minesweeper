@@ -57,19 +57,19 @@ const game = (function() {
       squares.push(document.getElementById(`square${x}-${y - 1}`));
       squares.forEach(element => {
         if(element !== null) {
-          xy = getXY(element);
-          x = xy[0];
-          y = xy[1];
-          element.style.background = 'green';
           if(element.style.pointerEvents !== 'none') {
+            xy = getXY(element);
+            x = xy[0];
+            y = xy[1];
+            element.style.background = 'green';
             count += 1;
-          }
-          element.style.pointerEvents = 'none';
-          let mines = countMines(x, y);
-          element.style.padding = "4.5px";
-          element.innerHTML = mines;
-          if(!checked.includes(element)) {
-            check.push(element);
+            element.style.pointerEvents = 'none';
+            let mines = countMines(x, y);
+            element.style.padding = "4.5px";
+            element.innerHTML = mines;
+            if(!checked.includes(element)) {
+              check.push(element);
+            }
           }
         }
       });
@@ -117,6 +117,10 @@ const game = (function() {
     }
   }
 
+  function easy(x) {
+
+  }
+
   function renderBoard(x, y, n) {
     const board = document.createElement('DIV');
     let count = 0;
@@ -139,7 +143,7 @@ const game = (function() {
         board.appendChild(square);
       }
     }
-    document.getElementById('need-points').innerHTML = 50 * 50 - count;
+    document.getElementById('need-points').innerHTML = x * y - count;
     if(best === null) {
       localStorage.setItem("best", 0);
       document.getElementById('best').innerHTML = best;
@@ -153,4 +157,7 @@ const game = (function() {
   return { renderBoard };
 })();
 
-game.renderBoard(50, 50, (50 * 50) / 2);
+document.getElementById('create').addEventListener('click', () => {
+  const size = parseInt(document.getElementById('size').value);
+  game.renderBoard(size, size, (size * size) / 2);
+}, false);

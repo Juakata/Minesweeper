@@ -18,7 +18,7 @@ h1 {
 
 .board {
   display: grid;
-  margin-top: 250px;
+  margin-top: 270px;
 }
 
 .square, .mine {
