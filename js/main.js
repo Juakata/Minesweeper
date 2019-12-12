@@ -3,7 +3,7 @@ let best = localStorage.getItem("best");
 const game = (function() {
   const main = document.getElementById('main');
 
-  function gameOver() {
+  function gameOver(result) {
     let board = document.getElementById('board');
     board.style.pointerEvents = "none";
     const squares = board.querySelectorAll(".square");
@@ -17,6 +17,13 @@ const game = (function() {
     const score = parseInt(document.getElementById('points').innerHTML);
     if(score > best) {
       localStorage.setItem("best", score);
+    }
+    const img = document.getElementById('img-face');
+    img.style.display = "block";
+    if(result === 1) {
+      img.src = "images/happy.png";
+    } else {
+      img.src = "images/bad.png";
     }
   }
 
@@ -62,6 +69,7 @@ const game = (function() {
             x = xy[0];
             y = xy[1];
             element.style.background = 'green';
+            element.style.boxShadow = 'none';
             count += 1;
             element.style.pointerEvents = 'none';
             let mines = countMines(x, y);
@@ -80,7 +88,7 @@ const game = (function() {
       count += 1;
     }
     if(count === parseInt(document.getElementById('points-needed').innerHTML)) {
-      gameOver();
+      gameOver(1);
     }
     document.getElementById('points').innerHTML = count;
   }
@@ -110,9 +118,10 @@ const game = (function() {
     if(obj.className === "mine") {
       obj.style.background = "b02525";
       obj.innerHTML = 'x';
-      gameOver();
+      gameOver(0);
     } else {
       obj.style.background = "green";
+      obj.style.boxShadow = 'none';
       const idArr = getXY(obj);
       let result = countMines(idArr[0], idArr[1]);
       obj.innerHTML = result;
@@ -125,6 +134,7 @@ const game = (function() {
       document.getElementById('main').removeChild(document.getElementById('board'));
       document.getElementById('points').innerHTML = 0;
     }
+    document.getElementById('img-face').style.display = "none";
     const board = document.createElement('DIV');
     let count = 0;
     board.classList.add('board');

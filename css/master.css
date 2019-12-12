@@ -6,6 +6,10 @@ h1 {
   text-align: center;
 }
 
+#img-face {
+  display: none;
+}
+
 .flex {
   display: flex;
   justify-content: center;
@@ -15,7 +19,7 @@ h1 {
   position: fixed;
   width: 100%;
   background: black;
-  padding: 10px 50px;
+  padding: 10px;
   color: white;
   top: 0;
   box-shadow: 1px 1px 5px black;
@@ -23,7 +27,7 @@ h1 {
 
 .board {
   display: grid;
-  margin-top: 270px;
+  margin-top: 300px;
 }
 
 .square, .mine {
@@ -31,4 +35,5 @@ h1 {
   padding: 12px;
   font-size: 12px;
   text-align: center;
+  box-shadow: 1px 1px 7px black;
 }
