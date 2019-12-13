@@ -170,7 +170,7 @@ const game = (function() {
   return { renderBoard };
 })();
 
-game.renderBoard(50, 50, (50 * 50) / 2);
+game.renderBoard(10, 10, (10 * 10) / 2);
 
 document.getElementById('create').addEventListener('click', () => {
   const size = parseInt(document.getElementById('size').value);

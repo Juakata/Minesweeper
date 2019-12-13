@@ -37,3 +37,23 @@ h1 {
   text-align: center;
   box-shadow: 1px 1px 7px black;
 }
+
+@media(max-width: 470px) {
+  #img-face {
+    width: 40vw;
+    height: 40vw;
+  }
+
+  #size {
+    width: 50px;
+  }
+
+  .info-title {
+    font-size: 3.5vw;
+  }
+
+  .board {
+    display: grid;
+    margin-top: 70vw;
+  }
+}
