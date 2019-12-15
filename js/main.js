@@ -1,4 +1,4 @@
-const best = localStorage.getItem("best");
+const best = localStorage.getItem('best');
 
 const game = (() => {
   const main = document.getElementById('main');
@@ -15,12 +15,12 @@ const game = (() => {
       ele.style.background = '#b02525';
     });
     const score = Number(document.getElementById('points').innerHTML);
-    if(score > best) {
+    if (score > best) {
       localStorage.setItem('best', score);
     }
     const img = document.getElementById('img-face');
     img.style.display = 'block';
-    if(result === 1) {
+    if (result === 1) {
       img.src = 'images/happy.png';
     } else {
       img.src = 'images/bad.png';
@@ -34,11 +34,11 @@ const game = (() => {
     let y = '';
     aux = 0;
     arrId.forEach((e) => {
-      if(aux === 0 && e !== '-') {
+      if (aux === 0 && e !== '-') {
         x += e;
-      } else if(e === '-'){
+      } else if (e === '-'){
         aux = 1;
-      }else {
+      } else {
         y += e;
       }
     });
@@ -63,19 +63,17 @@ const game = (() => {
       squares.push(document.getElementById(`square${x}-${y + 1}`));
       squares.push(document.getElementById(`square${x}-${y - 1}`));
       squares.forEach((element) => {
-        if(element !== null) {
-          if(element.style.pointerEvents !== 'none') {
+        if (element !== null) {
+          if (element.style.pointerEvents !== 'none') {
             xy = getXY(element);
-            x = xy[0];
-            y = xy[1];
             element.style.background = 'green';
             element.style.boxShadow = 'none';
             count += 1;
             element.style.pointerEvents = 'none';
-            let mines = countMines(x, y);
+            let mines = countMines(xy[0], xy[1]);
             element.style.padding = '4.5px';
             element.innerHTML = mines;
-            if(!checked.includes(element)) {
+            if (!checked.includes(element)) {
               check.push(element);
             }
           }
@@ -84,10 +82,10 @@ const game = (() => {
       check.splice(0, 1);
       checked.push(current);
     }
-    if(aux === count){
+    if (aux === count){
       count += 1;
     }
-    if(count === Number(document.getElementById('points-needed').innerHTML)) {
+    if (count === Number(document.getElementById('points-needed').innerHTML)) {
       gameOver(1);
     }
     document.getElementById('points').innerHTML = count;
@@ -105,7 +103,7 @@ const game = (() => {
     squares.push( document.getElementById(`mine${x + 1}-${y + 1}`));
     squares.push(document.getElementById(`mine${x - 1}-${y - 1}`));
     squares.forEach((e) => {
-      if(e !== null){
+      if (e !== null) {
         count += 1;
       }
     });
@@ -115,7 +113,7 @@ const game = (() => {
   function look(event) {
     let obj = event.target;
     obj.style.padding = '4.5px';
-    if(obj.className === 'mine') {
+    if (obj.className === 'mine') {
       obj.style.background = 'b02525';
       obj.innerHTML = 'x';
       gameOver(0);
@@ -130,7 +128,7 @@ const game = (() => {
   }
 
   function renderBoard(x, y, n) {
-    if(document.getElementById('board') !== null) {
+    if (document.getElementById('board') !== null) {
       document.getElementById('main').removeChild(document.getElementById('board'));
       document.getElementById('points').innerHTML = 0;
     }
@@ -157,8 +155,8 @@ const game = (() => {
       }
     }
     document.getElementById('points-needed').innerHTML = x * y - count;
-    if(best === null) {
-      localStorage.setItem("best", 0);
+    if (best === null) {
+      localStorage.setItem('best', 0);
       document.getElementById('best').innerHTML = best;
     } else {
       document.getElementById('best').innerHTML = best;
