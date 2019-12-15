@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="css/master.css">
+  </head>
+  <body>
+    <main id="main">
+      <div class="info-title">
+        <h1>Minesweeper</h1>
+        <div class="flex">
+          <div>
+            <h2>Points to win: <span id="points-needed"></span></h2>
+            <h2>Your best score: <span id="best"></span></h2>
+            <h2>Current points: <span id="points">0</span></h2>
+            <form>
+              <label for="size">Size: </label><input type="number" id="size" min="1" required>
+              <button type="button" name="button" id="create">Create</button>
+            </form>
+          </div>
+          <img id="img-face" src="images/bad.png" width="190" alt="face">
+        </div>
+      </div>
+    </main>
+    <script src="js/main.js"></script>
+  </body>
+</html>
