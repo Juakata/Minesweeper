@@ -1,39 +1,39 @@
-let best = localStorage.getItem("best");
+const best = localStorage.getItem("best");
 
-const game = (function() {
+const game = (() => {
   const main = document.getElementById('main');
 
   function gameOver(result) {
-    let board = document.getElementById('board');
-    board.style.pointerEvents = "none";
-    const squares = board.querySelectorAll(".square");
-    const mines = board.querySelectorAll(".mine");
-    squares.forEach(ele => {
+    const board = document.getElementById('board');
+    board.style.pointerEvents = 'none';
+    const squares = board.querySelectorAll('.square');
+    const mines = board.querySelectorAll('.mine');
+    squares.forEach((ele) => {
       ele.style.background = 'green';
     });
-    mines.forEach(ele => {
+    mines.forEach((ele) => {
       ele.style.background = '#b02525';
     });
-    const score = parseInt(document.getElementById('points').innerHTML);
+    const score = Number(document.getElementById('points').innerHTML);
     if(score > best) {
-      localStorage.setItem("best", score);
+      localStorage.setItem('best', score);
     }
     const img = document.getElementById('img-face');
-    img.style.display = "block";
+    img.style.display = 'block';
     if(result === 1) {
-      img.src = "images/happy.png";
+      img.src = 'images/happy.png';
     } else {
-      img.src = "images/bad.png";
+      img.src = 'images/bad.png';
     }
   }
 
   function getXY(obj) {
     const id = obj.id.slice(6, obj.id.size);
-    const arrId = id.split("");
-    let x = "";
-    let y = "";
+    const arrId = id.split('');
+    let x = '';
+    let y = '';
     aux = 0;
-    arrId.forEach(e => {
+    arrId.forEach((e) => {
       if(aux === 0 && e !== '-') {
         x += e;
       } else if(e === '-'){
@@ -43,14 +43,14 @@ const game = (function() {
       }
     });
 
-    return [parseInt(x), parseInt(y)];
+    return [Number(x), Number(y)];
   }
 
   function showGreens(mx, my) {
     const check = [];
     const checked = [];
     check.push(document.getElementById(`square${mx}-${my}`));
-    let count = parseInt(document.getElementById('points').innerHTML);
+    let count = Number(document.getElementById('points').innerHTML);
     const aux = count;
     while(check.length > 0) {
       let current = check[0];
@@ -62,7 +62,7 @@ const game = (function() {
       squares.push(document.getElementById(`square${x - 1}-${y}`));
       squares.push(document.getElementById(`square${x}-${y + 1}`));
       squares.push(document.getElementById(`square${x}-${y - 1}`));
-      squares.forEach(element => {
+      squares.forEach((element) => {
         if(element !== null) {
           if(element.style.pointerEvents !== 'none') {
             xy = getXY(element);
@@ -73,7 +73,7 @@ const game = (function() {
             count += 1;
             element.style.pointerEvents = 'none';
             let mines = countMines(x, y);
-            element.style.padding = "4.5px";
+            element.style.padding = '4.5px';
             element.innerHTML = mines;
             if(!checked.includes(element)) {
               check.push(element);
@@ -87,7 +87,7 @@ const game = (function() {
     if(aux === count){
       count += 1;
     }
-    if(count === parseInt(document.getElementById('points-needed').innerHTML)) {
+    if(count === Number(document.getElementById('points-needed').innerHTML)) {
       gameOver(1);
     }
     document.getElementById('points').innerHTML = count;
@@ -104,7 +104,7 @@ const game = (function() {
     squares.push( document.getElementById(`mine${x - 1}-${y + 1}`));
     squares.push( document.getElementById(`mine${x + 1}-${y + 1}`));
     squares.push(document.getElementById(`mine${x - 1}-${y - 1}`));
-    squares.forEach(e => {
+    squares.forEach((e) => {
       if(e !== null){
         count += 1;
       }
@@ -114,13 +114,13 @@ const game = (function() {
 
   function look(event) {
     let obj = event.target;
-    obj.style.padding = "4.5px";
-    if(obj.className === "mine") {
-      obj.style.background = "b02525";
+    obj.style.padding = '4.5px';
+    if(obj.className === 'mine') {
+      obj.style.background = 'b02525';
       obj.innerHTML = 'x';
       gameOver(0);
     } else {
-      obj.style.background = "green";
+      obj.style.background = 'green';
       obj.style.boxShadow = 'none';
       const idArr = getXY(obj);
       let result = countMines(idArr[0], idArr[1]);
@@ -134,7 +134,7 @@ const game = (function() {
       document.getElementById('main').removeChild(document.getElementById('board'));
       document.getElementById('points').innerHTML = 0;
     }
-    document.getElementById('img-face').style.display = "none";
+    document.getElementById('img-face').style.display = 'none';
     const board = document.createElement('DIV');
     let count = 0;
     board.classList.add('board');
@@ -142,7 +142,7 @@ const game = (function() {
     board.style.gridTemplateColumns = `repeat(${x}, 1fr)`;
     for(let i = 0; i < x; i += 1) {
       for(let j = 0; j < y; j += 1) {
-        let square = document.createElement("DIV");
+        let square = document.createElement('DIV');
         if((Math.floor(Math.random() * (3 - 1)) + 1) === 1 && count < n) {
           square.id = `mine${i}-${j}`;
           square.classList.add('mine');
@@ -173,6 +173,6 @@ const game = (function() {
 game.renderBoard(10, 10, (10 * 10) / 2);
 
 document.getElementById('create').addEventListener('click', () => {
-  const size = parseInt(document.getElementById('size').value);
+  const size = Number(document.getElementById('size').value);
   game.renderBoard(size, size, (size * size) / 2);
 }, false);
